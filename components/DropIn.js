@@ -31,25 +31,18 @@ export default function MyDropzone() {
   );
   return (
     <>
-
-    <div {...getRootProps()} className="relative w-full p-b-1/5  max-w-sm rounded overflow-hidden shadow-lg bg-blue-600 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-60 border border-gray-200">
-      <img
-        className='w-full'
-        src="/paradiso-cake2.webp"
-        alt='placeholder'
-      />
-      <div onClick={open} className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">The Coldest Sunset</div>
-        <input {...getInputProps()} />
-          {
-            isDragActive ?
-              <p className="text-gray-700 text-base">Drop the files here ...</p> :
-              <p className="text-gray-700 text-base">Drag & drop some files here, or click to select files</p>
-          }
-          
-        <p >
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-        </p>
+    
+    <div {...getRootProps()} className="flex flex-col text-white h-[28rem] w-full max-w-lg rounded shadow-lg bg-transparent">
+      <div onClick={open} className="rounded-xl flex justify-center items-center flex-col h-full px-12 py-12 bg-gradient-to-l bg-gradient-to-r from-sky-700 to-cyan-700">
+        <img src='/undraw_upload.svg' alt="" />
+        <div className='py-8'>
+          <input {...getInputProps()} />
+            {
+              isDragActive ?
+                <p className="text-base text-lg">Drop the files here ...</p> :
+                <p className="text-base text-2xl">Drag & drop some files here, or click to select files</p>
+            }
+        </div>
       </div>
     </div>    
 </>
