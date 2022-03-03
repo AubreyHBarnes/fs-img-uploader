@@ -7,7 +7,8 @@ export default function MyDropzone() {
 
   const [loading, setLoading] = useState(false)
   const [finished, setFinished] = useState(false)
-  const [displayImg, setdisplayImg] = useState(null)
+  const [isError, setisError] = useState(false)
+  const [showError, setShowError] = useState([])
   const [displayUrl, setdisplayUrl] = useState(null)
   
   const onDrop = useCallback(async (acceptedFiles) => {
@@ -16,7 +17,7 @@ export default function MyDropzone() {
       .from('img-uploader-bucket')
       .upload(`public/${acceptedFiles[0].path}`, acceptedFiles[0])
     if (data) {
-      setdisplayImg(acceptedFiles)
+      // setdisplayImg(acceptedFiles)
       const { signedURL, error } = await supabase
         .storage
         .from('img-uploader-bucket')
@@ -25,9 +26,12 @@ export default function MyDropzone() {
       setdisplayUrl(signedURL);
       setLoading(false);
       setFinished(true);
-      console.log(displayUrl)
+
     }
-    if (error) console.log(error)
+    if (error) {
+      setisError(true)
+      setShowError(error)
+    }
   }, [])
   const {getRootProps, getInputProps, open, isDragActive} = useDropzone({
     onDrop,
@@ -38,6 +42,20 @@ export default function MyDropzone() {
   const copyThat = (copyThis) => {
     navigator.clipboard.writeText(copyThis)
   }
+  if (isError) return (
+    <>
+      <div className="flex flex-col text-white text-2xl h-fit w-full max-w-lg rounded shadow-lg bg-transparent">
+        <div className="rounded-xl flex justify-center items-center flex-col h-full px-12 py-12 bg-gradient-to-l bg-gradient-to-r from-sky-700 to-cyan-700">
+          <div className='py-8'>
+              <p>Oops! An Error has occured.</p>
+              <p>Error Code: {showError.statusCode}</p>
+              <p>{showError.message}</p>
+          </div>
+          
+        </div>
+      </div>  
+    </>
+  );
   if (loading) return (
     <>
       <svg role="status" className="mr-2 w-12 h-12 text-gray-600 animate-spin dark:text-gray-600 fill-blue-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
