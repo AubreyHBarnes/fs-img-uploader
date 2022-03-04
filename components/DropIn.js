@@ -29,6 +29,7 @@ export default function MyDropzone() {
 
     }
     if (error) {
+      alert(error.message)
       setisError(true)
       setShowError(error)
     }
@@ -50,6 +51,7 @@ export default function MyDropzone() {
               <p>Oops! An Error has occured.</p>
               <p>Error Code: {showError.statusCode}</p>
               <p>{showError.message}</p>
+              {showError.statusCode === '23505' ? <p>A file with the same name has already been uploaded.</p> : null}
           </div>
           
         </div>
@@ -92,7 +94,7 @@ export default function MyDropzone() {
             {
               isDragActive ?
                 <p className="text-base text-lg">Drop the files here ...</p> :
-                <p className="text-base text-2xl">Drag & drop some files here, or click to select files</p>
+                <p className="text-base text-2xl">Drag & drop a jpg, png, or webp file here, or click to select files</p>
             }
         </div>
       </div>
